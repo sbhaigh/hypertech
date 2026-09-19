@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="HyperTech builds polished software experiences, including Solar Explorer for iPhone.">
+    <title>HyperTech | Solar Explorer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <a class="brand" href="index.html" aria-label="HyperTech home">
+            <span class="brand-mark"></span>
+            <span>HyperTech</span>
+        </a>
+        <nav aria-label="Primary">
+            <a href="#solar-explorer">Solar Explorer</a>
+            <a href="support.html">Support</a>
+            <a href="privacy.html">Privacy</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" aria-labelledby="hero-title">
+            <canvas id="orbit-canvas" aria-hidden="true"></canvas>
+            <div class="hero-content">
+                <p class="eyebrow">HyperTech presents</p>
+                <h1 id="hero-title">Solar Explorer</h1>
+                <p class="hero-copy">A nimble, touch-first solar system flight experience built for iPhone.</p>
+                <div class="hero-actions">
+                    <a class="button primary" href="support.html">Get Support</a>
+                    <a class="button secondary" href="#solar-explorer">Explore the App</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="solar-explorer" class="section product-section" aria-labelledby="product-title">
+            <div class="section-copy">
+                <p class="eyebrow">Product</p>
+                <h2 id="product-title">Arcade flight through a living solar system.</h2>
+                <p>Solar Explorer combines real planetary scale references, NASA/JPL ephemeris data when available, manual flight controls, proximity protection, asteroid fields, and a cockpit-style navigation arc.</p>
+            </div>
+            <div class="feature-grid">
+                <article class="feature">
+                    <h3>Manual Navigation</h3>
+                    <p>Fly with responsive controls and use the planet compass to orient toward nearby worlds without relying on autopilot.</p>
+                </article>
+                <article class="feature">
+                    <h3>Solar System Context</h3>
+                    <p>Distances, headings, orbit guides, and minimap cues help keep exploration readable at interplanetary scale.</p>
+                </article>
+                <article class="feature">
+                    <h3>Built for iPhone</h3>
+                    <p>Compact controls, audio defaults, and release-focused UI details are tuned for handheld play and App Store distribution.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section screenshots-section" aria-labelledby="screenshots-title">
+            <div class="section-copy">
+                <p class="eyebrow">Screenshots</p>
+                <h2 id="screenshots-title">Solar Explorer on iPhone.</h2>
+                <p>Live captures from the iPhone simulator showing the cockpit, manual navigation, planet selector, Earth, and Saturn.</p>
+            </div>
+            <div class="screenshot-gallery" aria-label="Solar Explorer screenshot gallery">
+                <figure class="screenshot-card">
+                    <button class="screenshot-open" type="button" data-full-src="assets/solar-explorer-launch.png" data-caption="Launch experience" aria-label="Expand Launch experience screenshot">
+                        <img src="assets/solar-explorer-launch.png" alt="Solar Explorer launch screen with HyperTech branding and planets across a star field">
+                    </button>
+                    <figcaption>Launch experience</figcaption>
+                </figure>
+                <figure class="screenshot-card">
+                    <button class="screenshot-open" type="button" data-full-src="assets/solar-explorer-cockpit.png" data-caption="Cockpit and flight controls" aria-label="Expand Cockpit and flight controls screenshot">
+                        <img src="assets/solar-explorer-cockpit.png" alt="Solar Explorer cockpit view showing the sun, flight controls, planet compass, and minimap">
+                    </button>
+                    <figcaption>Cockpit and flight controls</figcaption>
+                </figure>
+                <figure class="screenshot-card">
+                    <button class="screenshot-open" type="button" data-full-src="assets/solar-explorer-earth.png" data-caption="Earth approach" aria-label="Expand Earth approach screenshot">
+                        <img src="assets/solar-explorer-earth.png" alt="Solar Explorer focused on Earth with clouds, continents, flight controls, and minimap">
+                    </button>
+                    <figcaption>Earth approach</figcaption>
+                </figure>
+                <figure class="screenshot-card">
+                    <button class="screenshot-open" type="button" data-full-src="assets/solar-explorer-saturn.png" data-caption="Saturn and rings" aria-label="Expand Saturn and rings screenshot">
+                        <img src="assets/solar-explorer-saturn.png" alt="Solar Explorer focused on Saturn and its rings">
+                    </button>
+                    <figcaption>Saturn and rings</figcaption>
+                </figure>
+                <figure class="screenshot-card">
+                    <button class="screenshot-open" type="button" data-full-src="assets/solar-explorer-navigation.png" data-caption="Manual navigation cue" aria-label="Expand Manual navigation cue screenshot">
+                        <img src="assets/solar-explorer-navigation.png" alt="Solar Explorer manual navigation cue pointing toward Neptune">
+                    </button>
+                    <figcaption>Manual navigation cue</figcaption>
+                </figure>
+                <figure class="screenshot-card">
+                    <button class="screenshot-open" type="button" data-full-src="assets/solar-explorer-selector.png" data-caption="Planet selector" aria-label="Expand Planet selector screenshot">
+                        <img src="assets/solar-explorer-selector.png" alt="Solar Explorer planet selector open with planets and moons listed">
+                    </button>
+                    <figcaption>Planet selector</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section class="section split-section" aria-labelledby="studio-title">
+            <div>
+                <p class="eyebrow">Studio</p>
+                <h2 id="studio-title">Built by HyperTech.</h2>
+            </div>
+            <p>Solar Explorer is designed, developed, and built by Steve Haigh and Isaac Haigh.</p>
+        </section>
+
+        <section class="section support-band" aria-labelledby="support-title">
+            <div>
+                <h2 id="support-title">Need help with Solar Explorer?</h2>
+                <p>Visit support for contact details, bug reports, troubleshooting, and release feedback.</p>
+            </div>
+            <a class="button primary" href="support.html">Open Support</a>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <span>&copy; 2026 HyperTech.</span>
+        <span>Solar Explorer by Steve Haigh and Isaac Haigh.</span>
+    </footer>
+
+    <div class="lightbox" id="screenshot-lightbox" aria-hidden="true">
+        <button class="lightbox-backdrop" type="button" aria-label="Close expanded screenshot"></button>
+        <figure class="lightbox-content" role="dialog" aria-modal="true" aria-label="Expanded screenshot">
+            <div class="lightbox-orbit" aria-hidden="true">
+                <span></span>
+            </div>
+            <button class="lightbox-nav previous" type="button" aria-label="Previous screenshot">&lsaquo;</button>
+            <button class="lightbox-nav next" type="button" aria-label="Next screenshot">&rsaquo;</button>
+            <button class="lightbox-close" type="button" aria-label="Close expanded screenshot">&times;</button>
+            <img id="lightbox-image" alt="">
+            <figcaption>
+                <span id="lightbox-caption"></span>
+                <span id="lightbox-count"></span>
+            </figcaption>
+        </figure>
+    </div>
+
+    <script src="orbit.js"></script>
+</body>
+</html>
