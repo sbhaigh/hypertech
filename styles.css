@@ -194,6 +194,31 @@ h3 {
     background: rgba(255, 255, 255, 0.08);
 }
 
+.app-store-badge {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    border-radius: 7px;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.app-store-badge img {
+    display: block;
+    width: 148px;
+    height: auto;
+}
+
+.app-store-badge:hover,
+.app-store-badge:focus-visible {
+    opacity: 0.82;
+    transform: translateY(-1px);
+}
+
+.app-store-badge:focus-visible {
+    outline: 3px solid rgba(112, 231, 255, 0.82);
+    outline-offset: 4px;
+}
+
 .section {
     padding: clamp(56px, 8vw, 112px) clamp(22px, 6vw, 86px);
 }
