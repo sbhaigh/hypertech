@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "HyperTech Eurostile Extended";
+    src: url("assets/Eurostile%20Extended%20Bold.ttf") format("truetype");
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+}
+
 :root {
     color-scheme: dark;
     --bg: #050609;
@@ -138,6 +146,12 @@ h1 {
     font-size: clamp(4rem, 13vw, 9.5rem);
     line-height: 0.88;
     letter-spacing: 0;
+}
+
+#hero-title {
+    font-family: "HyperTech Eurostile Extended", "Eurostile Extended", "EurostileExt-Bold", "Eurostile", "Arial Black", sans-serif;
+    font-weight: 700;
+    font-stretch: expanded;
 }
 
 h2 {
