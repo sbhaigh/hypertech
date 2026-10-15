@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="75 0 850 850" role="img" aria-labelledby="favicon-title">
+    <title id="favicon-title">HyperTech</title>
+    <rect x="75" width="850" height="850" fill="#091a34"/>
+    <g transform="translate(0 5)">
+        <path d="M 731.98364 381.67356 A 245 245 0 0 1 271.70340 531.22767 M 252.27755 479.27086 A 245 245 0 0 1 717.16004 328.22138" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+        <g fill="#ffffff">
+            <path d="M392 291 L464 291 C449 367 450 470 475 552 L401 552 C383 460 382 376 392 291Z"/>
+            <path d="M522 291 L595 291 C622 367 621 476 595 552 L521 552 C547 458 550 370 522 291Z"/>
+        </g>
+        <path d="M183 509 C300 459 491 408 635 350 C705 322 756 294 821 286 C789 309 742 350 651 389 C489 466 319 503 183 520 Z" fill="#ffffff"/>
+    </g>
+</svg>
