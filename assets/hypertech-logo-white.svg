@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="740" viewBox="0 0 1900 740" role="img" aria-labelledby="logo-title">
+    <title id="logo-title">HyperTech</title>
+    <g transform="translate(0 -40) scale(.85)">
+        <path d="M 731.98364 381.67356 A 245 245 0 0 1 271.70340 531.22767 M 252.27755 479.27086 A 245 245 0 0 1 717.16004 328.22138" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+        <g fill="#ffffff">
+            <path d="M392 291 L464 291 C449 367 450 470 475 552 L401 552 C383 460 382 376 392 291Z"/>
+            <path d="M522 291 L595 291 C622 367 621 476 595 552 L521 552 C547 458 550 370 522 291Z"/>
+        </g>
+        <path d="M183 509 C300 459 491 408 635 350 C705 322 756 294 821 286 C789 309 742 350 651 389 C489 466 319 503 183 520 Z" fill="#ffffff"/>
+    </g>
+    <g transform="translate(1375.000 350.469) scale(1.3565341)" fill="none" stroke="#ffffff" stroke-width="9.2" stroke-linejoin="round" stroke-linecap="square">
+        <path d="M5 4 V66 M61 4 V66 M5 35 H61" transform="translate(-352.00 0)"/>
+        <path d="M4 4 L34 36 L64 4 M34 36 V66" transform="translate(-274.00 0)"/>
+        <path d="M5 66 V4 H47 Q63 4 63 19 Q63 35 47 35 H5" transform="translate(-194.00 0)"/>
+        <path d="M62 4 H5 V66 H62 M5 35 H55" transform="translate(-114.00 0)"/>
+        <path d="M5 66 V4 H46 Q63 4 63 19 Q63 35 46 35 H5 M37 35 L65 66" transform="translate(-36.00 0)"/>
+        <path d="M3 4 H66 M34.5 4 V66" transform="translate(46.00 0)"/>
+        <path d="M62 4 H5 V66 H62 M5 35 H55" transform="translate(127.00 0)"/>
+        <path d="M64 14 Q58 4 47 4 H22 Q5 4 5 22 V48 Q5 66 22 66 H47 Q58 66 64 56" transform="translate(205.00 0)"/>
+        <path d="M5 4 V66 M61 4 V66 M5 35 H61" transform="translate(286.00 0)"/>
+    </g>
+</svg>
