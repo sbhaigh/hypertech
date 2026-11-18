@@ -101,12 +101,22 @@ nav a[aria-current="page"] {
     cursor: crosshair;
 }
 
-#orbit-canvas {
+#orbit-canvas,
+#craft-canvas {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
+}
+
+#orbit-canvas {
+    z-index: 0;
     touch-action: pan-y;
+}
+
+#craft-canvas {
+    z-index: 3;
+    pointer-events: none;
 }
 
 .hero a,

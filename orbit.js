@@ -1,7 +1,9 @@
 const canvas = document.getElementById("orbit-canvas");
+const craftCanvas = document.getElementById("craft-canvas");
 
-if (canvas) {
+if (canvas && craftCanvas) {
     const ctx = canvas.getContext("2d");
+    const craftCtx = craftCanvas.getContext("2d");
     const hero = canvas.closest(".hero");
     const planets = [
         { radius: 58, size: 2.5, speed: 0.95, color: "#b9b1a3" },
@@ -83,7 +85,10 @@ if (canvas) {
         height = canvas.clientHeight;
         canvas.width = Math.floor(width * dpr);
         canvas.height = Math.floor(height * dpr);
+        craftCanvas.width = Math.floor(width * dpr);
+        craftCanvas.height = Math.floor(height * dpr);
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        craftCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
         stars = Array.from({ length: Math.floor(Math.max(width, height) * 0.18) }, () => ({
             x: Math.random() * width,
             y: Math.random() * height,
@@ -96,55 +101,55 @@ if (canvas) {
         const craftScale = Math.max(0.72, Math.min(1.2, scale * 1.08));
         const enginePulse = 0.78 + Math.sin(elapsed * 7.2) * 0.16;
 
-        ctx.save();
-        ctx.translate(x, y);
-        ctx.rotate(heading);
-        ctx.scale(craftScale, craftScale);
+        craftCtx.save();
+        craftCtx.translate(x, y);
+        craftCtx.rotate(heading);
+        craftCtx.scale(craftScale, craftScale);
 
-        const engineGlow = ctx.createRadialGradient(-13, 0, 0, -13, 0, 13);
+        const engineGlow = craftCtx.createRadialGradient(-13, 0, 0, -13, 0, 13);
         engineGlow.addColorStop(0, `rgba(255, 174, 46, ${0.72 * enginePulse})`);
         engineGlow.addColorStop(0.35, `rgba(255, 174, 46, ${0.28 * enginePulse})`);
         engineGlow.addColorStop(1, "rgba(255, 174, 46, 0)");
-        ctx.fillStyle = engineGlow;
-        ctx.beginPath();
-        ctx.arc(-13, 0, 13, 0, Math.PI * 2);
-        ctx.fill();
+        craftCtx.fillStyle = engineGlow;
+        craftCtx.beginPath();
+        craftCtx.arc(-13, 0, 13, 0, Math.PI * 2);
+        craftCtx.fill();
 
-        ctx.fillStyle = "rgba(31, 163, 255, 0.92)";
-        ctx.beginPath();
-        ctx.moveTo(-5, -2.5);
-        ctx.lineTo(-13, -9.5);
-        ctx.lineTo(-10, -1.2);
-        ctx.lineTo(-5, 0);
-        ctx.closePath();
-        ctx.fill();
-        ctx.beginPath();
-        ctx.moveTo(-5, 2.5);
-        ctx.lineTo(-13, 9.5);
-        ctx.lineTo(-10, 1.2);
-        ctx.lineTo(-5, 0);
-        ctx.closePath();
-        ctx.fill();
+        craftCtx.fillStyle = "rgba(31, 163, 255, 0.92)";
+        craftCtx.beginPath();
+        craftCtx.moveTo(-5, -2.5);
+        craftCtx.lineTo(-13, -9.5);
+        craftCtx.lineTo(-10, -1.2);
+        craftCtx.lineTo(-5, 0);
+        craftCtx.closePath();
+        craftCtx.fill();
+        craftCtx.beginPath();
+        craftCtx.moveTo(-5, 2.5);
+        craftCtx.lineTo(-13, 9.5);
+        craftCtx.lineTo(-10, 1.2);
+        craftCtx.lineTo(-5, 0);
+        craftCtx.closePath();
+        craftCtx.fill();
 
-        ctx.fillStyle = "rgba(71, 250, 255, 0.98)";
-        ctx.strokeStyle = "rgba(214, 255, 255, 0.72)";
-        ctx.lineWidth = 0.8;
-        ctx.beginPath();
-        ctx.moveTo(-10, -2.7);
-        ctx.lineTo(5, -2.7);
-        ctx.quadraticCurveTo(12, -2.2, 15, 0);
-        ctx.quadraticCurveTo(12, 2.2, 5, 2.7);
-        ctx.lineTo(-10, 2.7);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
+        craftCtx.fillStyle = "rgba(71, 250, 255, 0.98)";
+        craftCtx.strokeStyle = "rgba(214, 255, 255, 0.72)";
+        craftCtx.lineWidth = 0.8;
+        craftCtx.beginPath();
+        craftCtx.moveTo(-10, -2.7);
+        craftCtx.lineTo(5, -2.7);
+        craftCtx.quadraticCurveTo(12, -2.2, 15, 0);
+        craftCtx.quadraticCurveTo(12, 2.2, 5, 2.7);
+        craftCtx.lineTo(-10, 2.7);
+        craftCtx.closePath();
+        craftCtx.fill();
+        craftCtx.stroke();
 
-        ctx.fillStyle = "rgba(255, 174, 46, 0.96)";
-        ctx.beginPath();
-        ctx.ellipse(-11, 0, 3.2, 2.1, 0, 0, Math.PI * 2);
-        ctx.fill();
+        craftCtx.fillStyle = "rgba(255, 174, 46, 0.96)";
+        craftCtx.beginPath();
+        craftCtx.ellipse(-11, 0, 3.2, 2.1, 0, 0, Math.PI * 2);
+        craftCtx.fill();
 
-        ctx.restore();
+        craftCtx.restore();
     }
 
     function drawWaypoint(x, y, elapsed) {
@@ -199,6 +204,7 @@ if (canvas) {
         const delta = Math.min((now - lastFrame) / 1000, 0.05);
         lastFrame = now;
         ctx.clearRect(0, 0, width, height);
+        craftCtx.clearRect(0, 0, width, height);
         ctx.fillStyle = "#050609";
         ctx.fillRect(0, 0, width, height);
 
