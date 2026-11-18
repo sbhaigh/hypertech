@@ -351,12 +351,15 @@ if (canvas) {
     });
 
     let heroPointerStart = null;
+    let heroTouchStart = null;
+    let lastRedirectTime = Number.NEGATIVE_INFINITY;
 
     function isHeroControl(target) {
         return Boolean(target.closest?.("a, button"));
     }
 
     function redirectCraft(event) {
+        lastRedirectTime = performance.now();
         const bounds = canvas.getBoundingClientRect();
         const destination = {
             x: clamp(event.clientX - bounds.left, 22, width - 22),
@@ -422,6 +425,42 @@ if (canvas) {
         hero.addEventListener("pointercancel", () => {
             heroPointerStart = null;
         });
+
+        hero.addEventListener("touchstart", (event) => {
+            if (event.touches.length !== 1 || isHeroControl(event.target)) {
+                heroTouchStart = null;
+                return;
+            }
+
+            const touch = event.touches[0];
+            heroTouchStart = {
+                x: touch.clientX,
+                y: touch.clientY
+            };
+        }, { passive: true });
+
+        hero.addEventListener("touchend", (event) => {
+            const touchStart = heroTouchStart;
+            heroTouchStart = null;
+
+            if (!touchStart || event.changedTouches.length !== 1 || isHeroControl(event.target)) {
+                return;
+            }
+
+            const touch = event.changedTouches[0];
+            const touchTravel = Math.hypot(
+                touch.clientX - touchStart.x,
+                touch.clientY - touchStart.y
+            );
+
+            if (touchTravel <= 28 && performance.now() - lastRedirectTime > 500) {
+                redirectCraft(touch);
+            }
+        }, { passive: true });
+
+        hero.addEventListener("touchcancel", () => {
+            heroTouchStart = null;
+        }, { passive: true });
     }
     requestAnimationFrame(draw);
 }
