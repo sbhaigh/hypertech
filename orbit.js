@@ -15,6 +15,7 @@ if (canvas) {
     let height = 0;
     let dpr = 1;
     let start = performance.now();
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     function resize() {
         dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -31,8 +32,63 @@ if (canvas) {
         }));
     }
 
+    function drawSpacecraft(x, y, heading, scale, elapsed) {
+        const craftScale = Math.max(0.72, Math.min(1.2, scale * 1.08));
+        const enginePulse = 0.78 + Math.sin(elapsed * 7.2) * 0.16;
+
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(heading);
+        ctx.scale(craftScale, craftScale);
+
+        const engineGlow = ctx.createRadialGradient(-13, 0, 0, -13, 0, 13);
+        engineGlow.addColorStop(0, `rgba(255, 174, 46, ${0.72 * enginePulse})`);
+        engineGlow.addColorStop(0.35, `rgba(255, 174, 46, ${0.28 * enginePulse})`);
+        engineGlow.addColorStop(1, "rgba(255, 174, 46, 0)");
+        ctx.fillStyle = engineGlow;
+        ctx.beginPath();
+        ctx.arc(-13, 0, 13, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "rgba(31, 163, 255, 0.92)";
+        ctx.beginPath();
+        ctx.moveTo(-5, -2.5);
+        ctx.lineTo(-13, -9.5);
+        ctx.lineTo(-10, -1.2);
+        ctx.lineTo(-5, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(-5, 2.5);
+        ctx.lineTo(-13, 9.5);
+        ctx.lineTo(-10, 1.2);
+        ctx.lineTo(-5, 0);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.fillStyle = "rgba(71, 250, 255, 0.98)";
+        ctx.strokeStyle = "rgba(214, 255, 255, 0.72)";
+        ctx.lineWidth = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(-10, -2.7);
+        ctx.lineTo(5, -2.7);
+        ctx.quadraticCurveTo(12, -2.2, 15, 0);
+        ctx.quadraticCurveTo(12, 2.2, 5, 2.7);
+        ctx.lineTo(-10, 2.7);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = "rgba(255, 174, 46, 0.96)";
+        ctx.beginPath();
+        ctx.ellipse(-11, 0, 3.2, 2.1, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.restore();
+    }
+
     function draw(now) {
-        const elapsed = (now - start) / 1000;
+        const elapsed = reducedMotion.matches ? 12 : (now - start) / 1000;
         ctx.clearRect(0, 0, width, height);
         ctx.fillStyle = "#050609";
         ctx.fillRect(0, 0, width, height);
@@ -82,12 +138,97 @@ if (canvas) {
             ctx.fill();
         }
 
-        requestAnimationFrame(draw);
+        const craftAngle = elapsed * 0.16 + 0.75;
+        const craftRadiusX = Math.min(width * 0.29, 360 * scale);
+        const craftRadiusY = Math.min(height * 0.34, 260 * scale);
+        const craftX = cx + Math.cos(craftAngle) * craftRadiusX;
+        const craftY = cy + Math.sin(craftAngle) * craftRadiusY;
+        const craftDx = -Math.sin(craftAngle) * craftRadiusX;
+        const craftDy = Math.cos(craftAngle) * craftRadiusY;
+        const craftHeading = Math.atan2(craftDy, craftDx);
+
+        for (let step = 18; step > 0; step -= 1) {
+            const previousAngle = craftAngle - step * 0.018;
+            const nextAngle = craftAngle - (step - 1) * 0.018;
+            const alpha = (19 - step) / 19 * 0.16;
+            ctx.strokeStyle = `rgba(112, 231, 255, ${alpha})`;
+            ctx.lineWidth = Math.max(0.6, scale * 1.2);
+            ctx.beginPath();
+            ctx.moveTo(cx + Math.cos(previousAngle) * craftRadiusX,
+                       cy + Math.sin(previousAngle) * craftRadiusY);
+            ctx.lineTo(cx + Math.cos(nextAngle) * craftRadiusX,
+                       cy + Math.sin(nextAngle) * craftRadiusY);
+            ctx.stroke();
+        }
+
+        drawSpacecraft(craftX, craftY, craftHeading, scale, elapsed);
+
+        if (!reducedMotion.matches) {
+            requestAnimationFrame(draw);
+        }
     }
 
     resize();
-    window.addEventListener("resize", resize);
+    window.addEventListener("resize", () => {
+        resize();
+        if (reducedMotion.matches) {
+            requestAnimationFrame(draw);
+        }
+    });
+    reducedMotion.addEventListener("change", () => {
+        start = performance.now();
+        requestAnimationFrame(draw);
+    });
     requestAnimationFrame(draw);
+}
+
+const missionDisplay = document.querySelector(".mission-display");
+
+if (missionDisplay) {
+    const missionImage = document.getElementById("mission-display-image");
+    const missionCode = document.getElementById("mission-display-code");
+    const missionTitle = document.getElementById("mission-display-title");
+    const missionButtons = Array.from(document.querySelectorAll(".mission-card"));
+    const supportsHover = window.matchMedia("(hover: hover)").matches;
+    let missionTimer = null;
+
+    function selectMission(button, animate = true) {
+        const image = button.dataset.image;
+        const alt = button.dataset.alt || "";
+        const code = button.dataset.code || "Mission data";
+        const title = button.dataset.title || "Solar Explorer 2.1";
+
+        if (!image || !missionImage || !missionCode || !missionTitle) {
+            return;
+        }
+
+        for (const candidate of missionButtons) {
+            const isActive = candidate === button;
+            candidate.classList.toggle("is-active", isActive);
+            candidate.setAttribute("aria-pressed", String(isActive));
+        }
+
+        window.clearTimeout(missionTimer);
+        if (animate) {
+            missionDisplay.classList.add("is-changing");
+        }
+
+        missionTimer = window.setTimeout(() => {
+            missionImage.src = image;
+            missionImage.alt = alt;
+            missionCode.textContent = code;
+            missionTitle.textContent = title;
+            missionDisplay.classList.remove("is-changing");
+        }, animate ? 90 : 0);
+    }
+
+    for (const button of missionButtons) {
+        button.addEventListener("click", () => selectMission(button));
+        button.addEventListener("focus", () => selectMission(button));
+        if (supportsHover) {
+            button.addEventListener("pointerenter", () => selectMission(button));
+        }
+    }
 }
 
 const lightbox = document.getElementById("screenshot-lightbox");

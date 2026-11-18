@@ -3,9 +3,96 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="HyperTech builds polished software experiences, including Solar Explorer for iPhone.">
-    <title>HyperTech | Solar Explorer</title>
+    <meta name="description" content="Explore the solar system in Solar Explorer 2.1 for iPhone and iPad, with interactive flight controls, planet facts, discovery galleries, and Apollo history.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#050609">
+    <title>Solar Explorer 2.1 – Interactive Solar System | HyperTech</title>
+    <link rel="canonical" href="https://hyperte.ch/">
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="HyperTech">
+    <meta property="og:title" content="Solar Explorer 2.1 – Interactive Solar System App">
+    <meta property="og:description" content="Fly through a living solar system, discover planetary facts and galleries, and explore the Apollo archive on iPhone and iPad.">
+    <meta property="og:url" content="https://hyperte.ch/">
+    <meta property="og:image" content="https://hyperte.ch/assets/v21-iphone-earth-cockpit.jpg">
+    <meta property="og:image:width" content="1800">
+    <meta property="og:image:height" content="828">
+    <meta property="og:image:alt" content="Solar Explorer cockpit approaching Earth on iPhone">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Solar Explorer 2.1 – Interactive Solar System App">
+    <meta name="twitter:description" content="Fly through the solar system and explore planetary facts, discovery galleries, and Apollo history.">
+    <meta name="twitter:image" content="https://hyperte.ch/assets/v21-iphone-earth-cockpit.jpg">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://hyperte.ch/#organization",
+                "name": "HyperTech",
+                "url": "https://hyperte.ch/",
+                "logo": "https://hyperte.ch/assets/hypertech-logo-white.svg",
+                "email": "support@hyperte.ch"
+            },
+            {
+                "@type": "SoftwareApplication",
+                "@id": "https://hyperte.ch/#solar-explorer",
+                "name": "Solar Explorer",
+                "alternateName": "Solar Explorer 2.1",
+                "description": "An interactive solar system app with spacecraft flight controls, planetary facts, discovery galleries, and an Apollo history archive.",
+                "url": "https://hyperte.ch/",
+                "downloadUrl": "https://apps.apple.com/us/app/solar-explorer/id6759483367",
+                "softwareVersion": "2.1.0",
+                "operatingSystem": "iOS, iPadOS",
+                "applicationCategory": "EducationalApplication",
+                "author": { "@id": "https://hyperte.ch/#organization" },
+                "image": "https://hyperte.ch/assets/v21-iphone-earth-cockpit.jpg",
+                "screenshot": [
+                    "https://hyperte.ch/assets/v21-iphone-earth-cockpit.jpg",
+                    "https://hyperte.ch/assets/v21-ipad-earth-briefing.jpg",
+                    "https://hyperte.ch/assets/v21-duo-inner-moon.jpg"
+                ],
+                "featureList": [
+                    "Interactive spacecraft flight controls",
+                    "Planetary facts and discovery galleries",
+                    "Apollo mission history archive",
+                    "Solar system navigation and minimap",
+                    "Layouts for iPhone and iPad"
+                ]
+            },
+            {
+                "@type": "FAQPage",
+                "@id": "https://hyperte.ch/#questions",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "What is Solar Explorer?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Solar Explorer is an interactive solar system app by HyperTech. It combines spacecraft flight, planetary exploration, planet facts, discovery galleries, and lunar history."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What is new in Solar Explorer 2.1?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Version 2.1 adds planetary briefings, discovery galleries, an Apollo archive, smoother approaches and departures, enhanced haptic feedback, refined navigation and time controls, and improved cockpit layouts."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Which devices support Solar Explorer?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Solar Explorer is designed for iPhone and iPad, with responsive cockpit layouts that adapt to different screen sizes."
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-M51QYJ959E"></script>
     <script>
@@ -23,7 +110,8 @@
             <img src="assets/hypertech-logo-white.svg" alt="HyperTech" width="200" height="78">
         </a>
         <nav aria-label="Primary">
-            <a href="#solar-explorer">Solar Explorer</a>
+            <a href="#solar-explorer">2.1 Update</a>
+            <a href="#devices">Devices</a>
             <a href="support.html">Support</a>
             <a href="privacy.html">Privacy</a>
         </nav>
@@ -32,83 +120,205 @@
     <main>
         <section class="hero" aria-labelledby="hero-title">
             <canvas id="orbit-canvas" aria-hidden="true"></canvas>
-            <div class="hero-content">
-                <p class="eyebrow">HyperTech presents</p>
-                <h1 id="hero-title">Solar Explorer</h1>
-                <p class="hero-copy">A nimble, touch-first solar system flight experience built for iPhone.</p>
-                <div class="hero-actions">
-                    <a class="button primary" href="support.html">Get Support</a>
-                    <a class="button secondary" href="#solar-explorer">Explore the App</a>
-                    <a class="app-store-badge" href="https://apps.apple.com/us/app/solar-explorer/id6759483367" target="_blank" rel="noopener noreferrer" aria-label="Download Solar Explorer on the App Store">
-                        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
-                    </a>
+            <div class="hero-layout">
+                <div class="hero-content">
+                    <p class="release-chip"><strong>Version 2.1.0</strong> Available now</p>
+                    <p class="eyebrow">Mission Control, we’re ready for launch.</p>
+                    <h1 id="hero-title">Solar Explorer</h1>
+                    <p class="hero-copy">Pilot a living solar system, uncover the stories behind every world, and take the cockpit with you across iPhone, iPad, and iPhone Duo.</p>
+                    <div class="hero-actions">
+                        <a class="app-store-badge" href="https://apps.apple.com/us/app/solar-explorer/id6759483367" target="_blank" rel="noopener noreferrer" aria-label="Download Solar Explorer on the App Store">
+                            <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="Download on the App Store">
+                        </a>
+                        <a class="button secondary" href="#solar-explorer">See what’s new</a>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="solar-explorer" class="section product-section" aria-labelledby="product-title">
-            <div class="section-copy">
-                <p class="eyebrow">Product</p>
-                <h2 id="product-title">Arcade flight through a living solar system.</h2>
-                <p>Solar Explorer combines real planetary scale references, NASA/JPL ephemeris data when available, manual flight controls, proximity protection, asteroid fields, and a cockpit-style navigation arc.</p>
+        <section id="solar-explorer" class="section release-section" aria-labelledby="release-title">
+            <div class="release-heading">
+                <div>
+                    <p class="eyebrow">Version 2.1.0</p>
+                    <h2 id="release-title">Your next mission awaits.</h2>
+                </div>
+                <p>Mission Control has expanded the flight plan with deeper planetary discovery, a new lunar archive, more precise handling, and cockpit layouts refined for every screen.</p>
             </div>
-            <div class="feature-grid">
-                <article class="feature">
-                    <h3>Manual Navigation</h3>
-                    <p>Fly with responsive controls and use the planet compass to orient toward nearby worlds without relying on autopilot.</p>
-                </article>
-                <article class="feature">
-                    <h3>Solar System Context</h3>
-                    <p>Distances, headings, orbit guides, and minimap cues help keep exploration readable at interplanetary scale.</p>
-                </article>
-                <article class="feature">
-                    <h3>Built for iPhone</h3>
-                    <p>Compact controls, audio defaults, and release-focused UI details are tuned for handheld play and App Store distribution.</p>
-                </article>
+            <div class="mission-console">
+                <figure class="mission-display" aria-live="polite">
+                    <div class="mission-display-viewport">
+                        <img id="mission-display-image" src="assets/v21-ipad-earth-briefing.jpg" alt="Solar Explorer Earth planetary briefing on iPad">
+                        <div class="mission-display-hud" aria-hidden="true">
+                            <span id="mission-display-code">Discover</span>
+                            <span>Mission data / 2.1.0</span>
+                        </div>
+                    </div>
+                    <figcaption>
+                        <strong id="mission-display-title">Planetary briefings</strong>
+                        <span>Select a feature to inspect</span>
+                    </figcaption>
+                </figure>
+
+                <div class="mission-grid" aria-label="Version 2.1 feature selector">
+                    <button class="mission-card is-active" type="button" aria-pressed="true" data-image="assets/v21-ipad-earth-briefing.jpg" data-alt="Solar Explorer Earth planetary briefing on iPad" data-code="Discover" data-title="Planetary briefings">
+                        <span class="mission-card-media"><img src="assets/v21-ipad-earth-briefing.jpg" alt="" loading="lazy"></span>
+                        <span class="mission-card-copy">
+                            <span class="mission-kicker">Discover</span>
+                            <span class="mission-title">Planetary briefings</span>
+                            <span class="mission-description">Detailed planet facts and curated discovery galleries without leaving the cockpit.</span>
+                        </span>
+                    </button>
+                    <button class="mission-card" type="button" aria-pressed="false" data-image="assets/v21-duo-inner-moon.jpg" data-alt="Solar Explorer Moon approach on iPhone Duo" data-code="Archive" data-title="Apollo history">
+                        <span class="mission-card-media"><img src="assets/v21-duo-inner-moon.jpg" alt="" loading="lazy"></span>
+                        <span class="mission-card-copy">
+                            <span class="mission-kicker">Archive</span>
+                            <span class="mission-title">Apollo history</span>
+                            <span class="mission-description">Explore the Moon through a new archive dedicated to the Apollo missions.</span>
+                        </span>
+                    </button>
+                    <button class="mission-card" type="button" aria-pressed="false" data-image="assets/v21-duo-outer-saturn.jpg" data-alt="Solar Explorer approach to Saturn" data-code="Flight" data-title="Smoother approaches">
+                        <span class="mission-card-media"><img src="assets/v21-duo-outer-saturn.jpg" alt="" loading="lazy"></span>
+                        <span class="mission-card-copy">
+                            <span class="mission-kicker">Flight</span>
+                            <span class="mission-title">Smoother approaches</span>
+                            <span class="mission-description">Planetary arrivals and departures transition with greater control and clarity.</span>
+                        </span>
+                    </button>
+                    <button class="mission-card" type="button" aria-pressed="false" data-image="assets/v21-iphone-earth-cockpit.jpg" data-alt="Solar Explorer Earth cockpit on iPhone" data-code="Control" data-title="Sharper handling">
+                        <span class="mission-card-media"><img src="assets/v21-iphone-earth-cockpit.jpg" alt="" loading="lazy"></span>
+                        <span class="mission-card-copy">
+                            <span class="mission-kicker">Control</span>
+                            <span class="mission-title">Sharper handling</span>
+                            <span class="mission-description">More responsive flight controls pair with enhanced haptic feedback.</span>
+                        </span>
+                    </button>
+                    <button class="mission-card" type="button" aria-pressed="false" data-image="assets/v21-iphone-orbits.jpg" data-alt="Solar Explorer solar system navigation view" data-code="Navigation" data-title="Refined instruments">
+                        <span class="mission-card-media"><img src="assets/v21-iphone-orbits.jpg" alt="" loading="lazy"></span>
+                        <span class="mission-card-copy">
+                            <span class="mission-kicker">Navigation</span>
+                            <span class="mission-title">Refined instruments</span>
+                            <span class="mission-description">Navigation panels, the minimap, and time controls are easier to read and use.</span>
+                        </span>
+                    </button>
+                    <button class="mission-card" type="button" aria-pressed="false" data-image="assets/v21-ipad-time-controls.jpg" data-alt="Solar Explorer simulation controls arranged for iPad" data-code="Layout" data-title="Built for every screen">
+                        <span class="mission-card-media"><img src="assets/v21-ipad-time-controls.jpg" alt="" loading="lazy"></span>
+                        <span class="mission-card-copy">
+                            <span class="mission-kicker">Layout</span>
+                            <span class="mission-title">Built for every screen</span>
+                            <span class="mission-description">Cockpit layouts adapt across compact, folding, and tablet displays.</span>
+                        </span>
+                    </button>
+                </div>
             </div>
         </section>
 
-        <section class="section screenshots-section" aria-labelledby="screenshots-title">
-            <div class="section-copy">
-                <p class="eyebrow">Screenshots</p>
-                <h2 id="screenshots-title">Solar Explorer on iPhone.</h2>
-                <p>Live captures from the iPhone simulator showing the top-down solar system view and close approaches to the Sun, Earth, Mars, and Jupiter.</p>
+        <section id="devices" class="section devices-section" aria-labelledby="devices-title">
+            <div class="devices-heading">
+                <p class="eyebrow">One cockpit. Every display.</p>
+                <h2 id="devices-title">Mission-ready on every screen.</h2>
+                <p>Solar Explorer reshapes its instruments around the display in your hands, keeping flight, discovery, and navigation close at every scale.</p>
             </div>
-            <div class="screenshot-gallery" aria-label="Solar Explorer screenshot gallery">
-                <figure class="screenshot-card">
-                    <button class="screenshot-open" type="button" data-full-src="assets/01-launch-top-down-source.png" data-caption="Solar system overview" aria-label="Expand Solar system overview screenshot">
-                        <img src="assets/01-launch-top-down-source.png" alt="Solar Explorer top-down view showing planetary orbits, flight controls, and the solar system map">
-                    </button>
-                </figure>
-                <figure class="screenshot-card">
-                    <button class="screenshot-open" type="button" data-full-src="assets/02-sun-source.png" data-caption="Sun approach" aria-label="Expand Sun approach screenshot">
-                        <img src="assets/02-sun-source.png" alt="Solar Explorer close approach to the Sun with flight controls and the solar system map">
-                    </button>
-                </figure>
-                <figure class="screenshot-card">
-                    <button class="screenshot-open" type="button" data-full-src="assets/03-earth-source.png" data-caption="Earth approach" aria-label="Expand Earth approach screenshot">
-                        <img src="assets/03-earth-source.png" alt="Solar Explorer close approach to Earth showing Africa and Europe with flight controls and the solar system map">
-                    </button>
-                </figure>
-                <figure class="screenshot-card">
-                    <button class="screenshot-open" type="button" data-full-src="assets/04-mars-source.png" data-caption="Mars approach" aria-label="Expand Mars approach screenshot">
-                        <img src="assets/04-mars-source.png" alt="Solar Explorer close approach to Mars with flight controls and the solar system map">
-                    </button>
-                </figure>
-                <figure class="screenshot-card">
-                    <button class="screenshot-open" type="button" data-full-src="assets/05-jupiter-source.png" data-caption="Jupiter approach" aria-label="Expand Jupiter approach screenshot">
-                        <img src="assets/05-jupiter-source.png" alt="Solar Explorer close approach to Jupiter with flight controls and the solar system map">
-                    </button>
-                </figure>
+            <article class="device-story">
+                <div class="device-story-copy">
+                    <p class="device-label">iPhone</p>
+                    <h3>Flight in your hands.</h3>
+                    <p>A focused landscape cockpit keeps movement, flight mode, time, and navigation within thumb’s reach.</p>
+                </div>
+                <div class="device-shot-grid device-shot-grid-wide">
+                    <figure class="device-shot device-shot-iphone">
+                        <button class="screenshot-open" type="button" data-full-src="assets/v21-iphone-earth-cockpit.jpg" data-caption="Earth cockpit on iPhone" aria-label="Expand Earth cockpit on iPhone screenshot">
+                            <img src="assets/v21-iphone-earth-cockpit.jpg" alt="Solar Explorer Earth cockpit with flight controls and minimap on iPhone" loading="lazy">
+                            <span class="device-controls" aria-hidden="true"></span>
+                        </button>
+                        <figcaption><strong>Earth cockpit</strong><span>Responsive flight and arrival controls</span></figcaption>
+                    </figure>
+                    <figure class="device-shot device-shot-iphone">
+                        <button class="screenshot-open" type="button" data-full-src="assets/v21-iphone-orbits.jpg" data-caption="Solar system navigation on iPhone" aria-label="Expand solar system navigation on iPhone screenshot">
+                            <img src="assets/v21-iphone-orbits.jpg" alt="Solar Explorer solar system orbit view on iPhone" loading="lazy">
+                            <span class="device-controls" aria-hidden="true"></span>
+                        </button>
+                        <figcaption><strong>System view</strong><span>Refined navigation and orbital context</span></figcaption>
+                    </figure>
+                </div>
+            </article>
+
+            <article class="device-story device-story-reverse">
+                <div class="device-story-copy">
+                    <p class="device-label">iPad</p>
+                    <h3>Go deeper into every world.</h3>
+                    <p>The larger display gives planetary briefings, visual records, physical profiles, and simulation controls room to breathe.</p>
+                </div>
+                <div class="device-shot-grid">
+                    <figure class="device-shot device-shot-ipad">
+                        <button class="screenshot-open" type="button" data-full-src="assets/v21-ipad-earth-briefing.jpg" data-caption="Earth planetary briefing on iPad" aria-label="Expand Earth planetary briefing on iPad screenshot">
+                            <img src="assets/v21-ipad-earth-briefing.jpg" alt="Solar Explorer Earth object archive and planetary briefing on iPad" loading="lazy">
+                            <span class="device-controls" aria-hidden="true"></span>
+                        </button>
+                        <figcaption><strong>Planetary briefings</strong><span>Facts, profiles, and discovery galleries</span></figcaption>
+                    </figure>
+                    <figure class="device-shot device-shot-ipad">
+                        <button class="screenshot-open" type="button" data-full-src="assets/v21-ipad-time-controls.jpg" data-caption="Simulation time controls on iPad" aria-label="Expand simulation time controls on iPad screenshot">
+                            <img src="assets/v21-ipad-time-controls.jpg" alt="Solar Explorer simulation speed controls on iPad" loading="lazy">
+                            <span class="device-controls" aria-hidden="true"></span>
+                        </button>
+                        <figcaption><strong>Time controls</strong><span>Presets and fine simulation adjustment</span></figcaption>
+                    </figure>
+                </div>
+            </article>
+
+            <article class="device-story">
+                <div class="device-story-copy">
+                    <p class="device-label">iPhone Duo</p>
+                    <h3>Expand the horizon.</h3>
+                    <p>The cockpit responds to both Duo displays: an immersive inner view for exploration and a compact outer layout for quick missions.</p>
+                </div>
+                <div class="device-shot-grid">
+                    <figure class="device-shot device-shot-duo-inner">
+                        <button class="screenshot-open" type="button" data-full-src="assets/v21-duo-inner-moon.jpg" data-caption="Lunar flight on the iPhone Duo inner display" aria-label="Expand lunar flight on iPhone Duo inner display screenshot">
+                            <img src="assets/v21-duo-inner-moon.jpg" alt="Solar Explorer Moon approach on the open iPhone Duo inner display" loading="lazy">
+                            <span class="device-controls" aria-hidden="true"></span>
+                        </button>
+                        <figcaption><strong>Inner display</strong><span>An expansive lunar cockpit</span></figcaption>
+                    </figure>
+                    <figure class="device-shot device-shot-duo-outer">
+                        <button class="screenshot-open" type="button" data-full-src="assets/v21-duo-outer-saturn.jpg" data-caption="Saturn flight on the iPhone Duo outer display" aria-label="Expand Saturn flight on iPhone Duo outer display screenshot">
+                            <img src="assets/v21-duo-outer-saturn.jpg" alt="Solar Explorer Saturn approach on the iPhone Duo outer display" loading="lazy">
+                            <span class="device-controls" aria-hidden="true"></span>
+                        </button>
+                        <figcaption><strong>Outer display</strong><span>A compact flight deck</span></figcaption>
+                    </figure>
+                </div>
+            </article>
+        </section>
+
+        <section id="questions" class="section faq-section" aria-labelledby="questions-title">
+            <div class="faq-heading">
+                <p class="eyebrow">Mission briefing</p>
+                <h2 id="questions-title">Solar Explorer at a glance.</h2>
+                <p>Quick answers about the app, the 2.1 update, and supported Apple devices.</p>
+            </div>
+            <div class="faq-grid">
+                <article class="info-panel">
+                    <h3>What is Solar Explorer?</h3>
+                    <p>Solar Explorer is an interactive solar system app by HyperTech. Pilot a spacecraft, visit planets and moons, study planet facts, browse discovery galleries, and explore lunar history.</p>
+                </article>
+                <article class="info-panel">
+                    <h3>What is new in version 2.1?</h3>
+                    <p>Version 2.1 adds planetary briefings, discovery galleries, an Apollo archive, smoother approaches and departures, enhanced haptics, refined navigation and time controls, and improved cockpit layouts.</p>
+                </article>
+                <article class="info-panel">
+                    <h3>Which devices are supported?</h3>
+                    <p>Solar Explorer is designed for iPhone and iPad, with responsive cockpit layouts that adapt the flight, navigation, and discovery experience to different screen sizes.</p>
+                </article>
             </div>
         </section>
 
         <section class="section split-section" aria-labelledby="studio-title">
             <div>
-                <p class="eyebrow">Studio</p>
+                <p class="eyebrow">Mission team</p>
                 <h2 id="studio-title">Built by HyperTech.</h2>
             </div>
-            <p>Solar Explorer is designed, developed, and built by Steve Haigh and Isaac Haigh.</p>
+            <p>Solar Explorer is designed, developed, and built by Steve Haigh and Isaac Haigh—now with a richer archive and a cockpit ready for more screens.</p>
         </section>
 
         <section class="section support-band" aria-labelledby="support-title">

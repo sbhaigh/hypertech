@@ -1,0 +1,30 @@
+# HyperTech and Solar Explorer
+
+> HyperTech develops Solar Explorer, an interactive solar system app for iPhone and iPad.
+
+## Solar Explorer
+
+Solar Explorer lets people pilot a spacecraft through a simulated solar system, explore planets and moons, read planetary facts, browse discovery galleries, and explore an archive of Apollo lunar history.
+
+Current version: 2.1.0
+Download: https://apps.apple.com/us/app/solar-explorer/id6759483367
+Product page: https://hyperte.ch/
+
+## Version 2.1 features
+
+- Planetary briefings with planet facts and discovery galleries
+- Apollo mission history archive
+- Smoother planetary approaches and departures
+- Enhanced flight controls and haptic feedback
+- Refined navigation panels, minimap, and time controls
+- Responsive cockpit layouts for iPhone and iPad screen sizes
+
+## Official pages
+
+- Product: https://hyperte.ch/
+- Support: https://hyperte.ch/support.html
+- Privacy: https://hyperte.ch/privacy.html
+
+## Contact
+
+Support email: support@hyperte.ch
