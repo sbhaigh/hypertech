@@ -2,6 +2,7 @@ const canvas = document.getElementById("orbit-canvas");
 
 if (canvas) {
     const ctx = canvas.getContext("2d");
+    const hero = canvas.closest(".hero");
     const planets = [
         { radius: 58, size: 2.5, speed: 0.95, color: "#b9b1a3" },
         { radius: 94, size: 4, speed: 0.62, color: "#e4c36a" },
@@ -15,7 +16,66 @@ if (canvas) {
     let height = 0;
     let dpr = 1;
     let start = performance.now();
+    let lastFrame = start;
+    let reducedHoldTimer = null;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const craft = {
+        mode: "orbit",
+        orbitAngle: 0.75,
+        x: 0,
+        y: 0,
+        heading: 0,
+        route: null,
+        destination: null,
+        holdUntil: 0,
+        trail: []
+    };
+
+    function clamp(value, minimum, maximum) {
+        return Math.max(minimum, Math.min(maximum, value));
+    }
+
+    function createFlightPath(from, startHeading, to, arrivalHeading, now) {
+        const distance = Math.hypot(to.x - from.x, to.y - from.y);
+        const outwardHandle = clamp(distance * 0.42, 64, 230);
+        const arrivalHandle = clamp(distance * 0.28, 42, 170);
+
+        return {
+            p0: { x: from.x, y: from.y },
+            p1: {
+                x: from.x + Math.cos(startHeading) * outwardHandle,
+                y: from.y + Math.sin(startHeading) * outwardHandle
+            },
+            p2: {
+                x: to.x - Math.cos(arrivalHeading) * arrivalHandle,
+                y: to.y - Math.sin(arrivalHeading) * arrivalHandle
+            },
+            p3: { x: to.x, y: to.y },
+            arrivalHeading,
+            startTime: now,
+            duration: clamp(1050 + distance * 3.8, 1250, 3900)
+        };
+    }
+
+    function sampleFlightPath(route, progress) {
+        const inverse = 1 - progress;
+        const x = inverse ** 3 * route.p0.x
+            + 3 * inverse ** 2 * progress * route.p1.x
+            + 3 * inverse * progress ** 2 * route.p2.x
+            + progress ** 3 * route.p3.x;
+        const y = inverse ** 3 * route.p0.y
+            + 3 * inverse ** 2 * progress * route.p1.y
+            + 3 * inverse * progress ** 2 * route.p2.y
+            + progress ** 3 * route.p3.y;
+        const dx = 3 * inverse ** 2 * (route.p1.x - route.p0.x)
+            + 6 * inverse * progress * (route.p2.x - route.p1.x)
+            + 3 * progress ** 2 * (route.p3.x - route.p2.x);
+        const dy = 3 * inverse ** 2 * (route.p1.y - route.p0.y)
+            + 6 * inverse * progress * (route.p2.y - route.p1.y)
+            + 3 * progress ** 2 * (route.p3.y - route.p2.y);
+
+        return { x, y, heading: Math.atan2(dy, dx) };
+    }
 
     function resize() {
         dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -87,8 +147,57 @@ if (canvas) {
         ctx.restore();
     }
 
+    function drawWaypoint(x, y, elapsed) {
+        const size = 10 + Math.sin(elapsed * 4) * 1.5;
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.strokeStyle = "rgba(112, 231, 255, 0.72)";
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(-size, -size * 0.45);
+        ctx.lineTo(-size, -size);
+        ctx.lineTo(-size * 0.45, -size);
+        ctx.moveTo(size * 0.45, -size);
+        ctx.lineTo(size, -size);
+        ctx.lineTo(size, -size * 0.45);
+        ctx.moveTo(size, size * 0.45);
+        ctx.lineTo(size, size);
+        ctx.lineTo(size * 0.45, size);
+        ctx.moveTo(-size * 0.45, size);
+        ctx.lineTo(-size, size);
+        ctx.lineTo(-size, size * 0.45);
+        ctx.stroke();
+        ctx.restore();
+    }
+
+    function drawTrail(scale) {
+        for (let index = 1; index < craft.trail.length; index += 1) {
+            const previous = craft.trail[index - 1];
+            const current = craft.trail[index];
+            const alpha = (index / craft.trail.length) * 0.18;
+            ctx.strokeStyle = `rgba(112, 231, 255, ${alpha})`;
+            ctx.lineWidth = Math.max(0.6, scale * 1.2);
+            ctx.beginPath();
+            ctx.moveTo(previous.x, previous.y);
+            ctx.lineTo(current.x, current.y);
+            ctx.stroke();
+        }
+    }
+
+    function rememberCraftPosition() {
+        const previous = craft.trail[craft.trail.length - 1];
+        if (!previous || Math.hypot(craft.x - previous.x, craft.y - previous.y) > 1.5) {
+            craft.trail.push({ x: craft.x, y: craft.y });
+            if (craft.trail.length > 42) {
+                craft.trail.shift();
+            }
+        }
+    }
+
     function draw(now) {
         const elapsed = reducedMotion.matches ? 12 : (now - start) / 1000;
+        const delta = Math.min((now - lastFrame) / 1000, 0.05);
+        lastFrame = now;
         ctx.clearRect(0, 0, width, height);
         ctx.fillStyle = "#050609";
         ctx.fillRect(0, 0, width, height);
@@ -138,30 +247,82 @@ if (canvas) {
             ctx.fill();
         }
 
-        const craftAngle = elapsed * 0.16 + 0.75;
         const craftRadiusX = Math.min(width * 0.29, 360 * scale);
         const craftRadiusY = Math.min(height * 0.34, 260 * scale);
-        const craftX = cx + Math.cos(craftAngle) * craftRadiusX;
-        const craftY = cy + Math.sin(craftAngle) * craftRadiusY;
-        const craftDx = -Math.sin(craftAngle) * craftRadiusX;
-        const craftDy = Math.cos(craftAngle) * craftRadiusY;
-        const craftHeading = Math.atan2(craftDy, craftDx);
 
-        for (let step = 18; step > 0; step -= 1) {
-            const previousAngle = craftAngle - step * 0.018;
-            const nextAngle = craftAngle - (step - 1) * 0.018;
-            const alpha = (19 - step) / 19 * 0.16;
-            ctx.strokeStyle = `rgba(112, 231, 255, ${alpha})`;
-            ctx.lineWidth = Math.max(0.6, scale * 1.2);
-            ctx.beginPath();
-            ctx.moveTo(cx + Math.cos(previousAngle) * craftRadiusX,
-                       cy + Math.sin(previousAngle) * craftRadiusY);
-            ctx.lineTo(cx + Math.cos(nextAngle) * craftRadiusX,
-                       cy + Math.sin(nextAngle) * craftRadiusY);
-            ctx.stroke();
+        function orbitPosition(angle) {
+            return {
+                x: cx + Math.cos(angle) * craftRadiusX,
+                y: cy + Math.sin(angle) * craftRadiusY,
+                heading: Math.atan2(
+                    Math.cos(angle) * craftRadiusY,
+                    -Math.sin(angle) * craftRadiusX
+                )
+            };
         }
 
-        drawSpacecraft(craftX, craftY, craftHeading, scale, elapsed);
+        if (craft.mode === "hold" && now >= craft.holdUntil) {
+            const nearestAngle = Math.atan2(
+                (craft.y - cy) / Math.max(craftRadiusY, 1),
+                (craft.x - cx) / Math.max(craftRadiusX, 1)
+            );
+            const rejoinAngle = nearestAngle + 0.5;
+            const rejoinPoint = orbitPosition(rejoinAngle);
+            craft.route = createFlightPath(
+                craft,
+                craft.heading,
+                rejoinPoint,
+                rejoinPoint.heading,
+                now
+            );
+            craft.route.rejoinAngle = rejoinAngle;
+            craft.mode = "return";
+        }
+
+        if (craft.mode === "divert" || craft.mode === "return") {
+            const progress = clamp((now - craft.route.startTime) / craft.route.duration, 0, 1);
+            const position = sampleFlightPath(craft.route, progress);
+            craft.x = position.x;
+            craft.y = position.y;
+            craft.heading = position.heading;
+
+            if (progress >= 1) {
+                if (craft.mode === "divert") {
+                    craft.x = craft.route.p3.x;
+                    craft.y = craft.route.p3.y;
+                    craft.heading = craft.route.arrivalHeading;
+                    craft.route = null;
+                    craft.mode = "hold";
+                    craft.holdUntil = now + 1000;
+                } else {
+                    craft.orbitAngle = craft.route.rejoinAngle;
+                    craft.route = null;
+                    craft.destination = null;
+                    craft.mode = "orbit";
+                    const orbit = orbitPosition(craft.orbitAngle);
+                    craft.x = orbit.x;
+                    craft.y = orbit.y;
+                    craft.heading = orbit.heading;
+                }
+            }
+        } else if (craft.mode === "orbit") {
+            if (!reducedMotion.matches) {
+                craft.orbitAngle += delta * 0.16;
+            }
+            const orbit = orbitPosition(craft.orbitAngle);
+            craft.x = orbit.x;
+            craft.y = orbit.y;
+            craft.heading = orbit.heading;
+        }
+
+        rememberCraftPosition();
+        drawTrail(scale);
+
+        if (craft.destination && (craft.mode === "divert" || craft.mode === "hold")) {
+            drawWaypoint(craft.destination.x, craft.destination.y, elapsed);
+        }
+
+        drawSpacecraft(craft.x, craft.y, craft.heading, scale, elapsed);
 
         if (!reducedMotion.matches) {
             requestAnimationFrame(draw);
@@ -171,14 +332,97 @@ if (canvas) {
     resize();
     window.addEventListener("resize", () => {
         resize();
+        craft.mode = "orbit";
+        craft.route = null;
+        craft.destination = null;
+        craft.trail = [];
         if (reducedMotion.matches) {
             requestAnimationFrame(draw);
         }
     });
     reducedMotion.addEventListener("change", () => {
         start = performance.now();
+        lastFrame = start;
+        craft.mode = "orbit";
+        craft.route = null;
+        craft.destination = null;
+        craft.trail = [];
         requestAnimationFrame(draw);
     });
+
+    let heroPointerStart = null;
+
+    function isHeroControl(target) {
+        return Boolean(target.closest?.("a, button"));
+    }
+
+    function redirectCraft(event) {
+        const bounds = canvas.getBoundingClientRect();
+        const destination = {
+            x: clamp(event.clientX - bounds.left, 22, width - 22),
+            y: clamp(event.clientY - bounds.top, 22, height - 22)
+        };
+        const arrivalHeading = Math.atan2(destination.y - craft.y, destination.x - craft.x);
+
+        if (reducedMotion.matches) {
+            window.clearTimeout(reducedHoldTimer);
+            craft.x = destination.x;
+            craft.y = destination.y;
+            craft.heading = arrivalHeading;
+            craft.destination = destination;
+            craft.mode = "hold";
+            craft.holdUntil = performance.now() + 1000;
+            craft.trail = [];
+            requestAnimationFrame(draw);
+            reducedHoldTimer = window.setTimeout(() => {
+                craft.mode = "orbit";
+                craft.destination = null;
+                requestAnimationFrame(draw);
+            }, 1000);
+            return;
+        }
+
+        craft.destination = destination;
+        craft.route = createFlightPath(craft, craft.heading, destination, arrivalHeading, performance.now());
+        craft.mode = "divert";
+    }
+
+    if (hero) {
+        hero.addEventListener("pointerdown", (event) => {
+            if (isHeroControl(event.target)) {
+                heroPointerStart = null;
+                return;
+            }
+
+            heroPointerStart = {
+                id: event.pointerId,
+                x: event.clientX,
+                y: event.clientY
+            };
+        });
+
+        hero.addEventListener("pointerup", (event) => {
+            const pointerStart = heroPointerStart;
+            heroPointerStart = null;
+
+            if (!pointerStart || pointerStart.id !== event.pointerId || isHeroControl(event.target)) {
+                return;
+            }
+
+            const pointerTravel = Math.hypot(
+                event.clientX - pointerStart.x,
+                event.clientY - pointerStart.y
+            );
+
+            if (pointerTravel <= 12) {
+                redirectCraft(event);
+            }
+        });
+
+        hero.addEventListener("pointercancel", () => {
+            heroPointerStart = null;
+        });
+    }
     requestAnimationFrame(draw);
 }
 
